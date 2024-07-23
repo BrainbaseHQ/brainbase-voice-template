@@ -1,4 +1,4 @@
-# Brainbase Kafka Template
+# Brainbase Voice Template
 
 This assignment requires you to create and deploy the Brainbase Voice service.
 
