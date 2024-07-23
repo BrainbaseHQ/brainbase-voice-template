@@ -1,29 +1,27 @@
 # Brainbase Kafka Template
 
-This assignment requires you to create the Brainbase Kafka internal AI worker.
+This assignment requires you to create and deploy the Brainbase Voice service.
 
 ## Introduction
 
-At Brainbase, we work on a lot of fun and exciting things. Unfortunately, creating integrations isn't one of them, but it is something that has to get done, so we want to make it as easy on ourselves as possible.
+At Brainbase, one of our most popular workers is our Voice worker which can make and receive natural sounding, low-latency calls.
 
-Your first task at Brainbase is to follow our motto and *make yourself useless* by making an AI worker that can take over this integration creation from you, so you can work on better things that actually excite you.
+Your first task at Brainbase is to create and deploy a simple version of this service.
 
 ## Installing the template
 
 ### Prerequisites
 
-Before you begin, ensure you have Node.js installed on your machine. If not, you can download and install it from [Node.js official website](https://nodejs.org/).
+Before you begin, ensure you have Node.js and Python installed on your machine. If not, you can download and install it from [Node.js official website](https://nodejs.org/) and [Python official website](https://www.python.org/).
 
 ### Installation
 
 Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/BrainbaseHQ/brainbase-kafka-template
-cd brainbase-kafka-template
+git clone https://github.com/BrainbaseHQ/brainbase-voice-template
+cd brainbase-voice-template
 ```
-
-Since the project uses only built-in Node.js modules, no additional npm installations are required.
 
 ### Making the Script Executable
 
@@ -72,19 +70,42 @@ The assignment has the following components:
 
 **This is a challenging assignment.** Therefore you're given the following milestones that get progressively more difficult, and provide necessary structure for how to implement the entire system.
 
-### Milestone 1: Terminal Chat
-For Milestone 1, all you need to do is connect the provided application to the OpenAI GPT-4 API to create a lite version of ChatGPT on the terminal. **No function calling or streaming necessary.**
+### Milestone 1: Echophone
+For Milestone 1, you need to implement a service that will repeat the caller's speech back to them, by setting up the Websocket server and the server which will route the Twilio call here.
 
 #### Criteria
-- [ ] The OpenAI API is successfully set up.
-- [ ] The system is able to keep a conversation going.
+- [ ] `server.js/server.py` is successfully set up to receive call from Twilio and reroute to websocket server.
+- [ ] `sockets.js/sockets.py` successfully receives audio from the Twilio connection and can repeat the speech back to the caller.
+- [ ] Every Twilio number has its own unique identifier which gets passed into the websocket endpoint (the websocket should know which `call_id` each call is when processing).
 
-### Milestone 2: Basic file tasks
-For Milestone 2, you need to allow your basic chat app from Milestone 1 to create the correct file structure for a new app based on user instruction.
+### Milestone 2: AI voice
+For Milestone 2, you need to modify your sockets.js service to be able to have a conversation with the user. Speech coming into websocket is transcribed to text, sent to OpenAI, response is returned, response is converted to speech, and response is finally sent back to the Twilio client.
+
+**TIP: While you can implement all of these from scratch, you can use Pipecat for some/most/all. [Pipecat](https://github.com/pipecat-ai/pipecat) is an open-source, free AI package that has a lot of these services built in and makes it easy to create pipelines.
 
 #### Criteria
-- [ ] Functions `read_file`, `create_file`, `write_into_file` and `list_files_in_workspace` are created
-- [ ] `read_file` logs out the contents of the file **with line numbers**, for example:
+- [ ] TTS (Deepgram) is correctly implemented
+- [ ] LLM (OpenAI) is correctly implemented
+- [ ] STT (ElevenLabs) is correctly implemented
+- [ ] <1 second latency from end of caller speech to start of AI speech
+- [ ] User can have a call with the AI on the Twilio number 
+- [ ] The system can run an unlimited number of these turns
+
+### Milestone 3: Interruptions
+For Milestone 3, you need to add the ability to be interrupted to the AI voice service so that when the caller starts talking in the middle of the AI's speech, the AI is able to stop and listent to the caller.
+
+#### Criteria
+- [ ] Interruptability threshold is adjustable
+- [ ] <1 second latency from end of caller speech to start of AI speech
+
+### Milestone 4: Scale up
+For Milestone 4, you need to scale up this voice service to be able to take over 100 concurrent calls, by Dockerizing the service and deploying on Kubernetes.
+
+#### Criteria
+- [ ] Interruptability threshold is adjustable
+- [ ] <1 second latency from end of caller speech to start of AI speech
+
+      
 ```bash
 1. const { action_1 } = require('/actions/action_1.js');
 2. 
