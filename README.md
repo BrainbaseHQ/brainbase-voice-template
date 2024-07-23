@@ -102,8 +102,9 @@ For Milestone 3, you need to add the ability to be interrupted to the AI voice s
 For Milestone 4, you need to scale up this voice service to be able to take over 100 concurrent calls, by Dockerizing the service and deploying on Kubernetes.
 
 #### Criteria
-- [ ] Interruptability threshold is adjustable
-- [ ] <1 second latency from end of caller speech to start of AI speech
+- [ ] Service Dockerized
+- [ ] Running on Kubernetes locally with correct ports and permissions
+- [ ] >100 concurrency
 
       
 ```bash
