@@ -23,21 +23,25 @@ git clone https://github.com/BrainbaseHQ/brainbase-voice-template
 cd brainbase-voice-template
 ```
 
-### Making the Script Executable
+### Using ngrok
 
-To make the `main.js` script executable, run the following command:
-
-```bash
-chmod +x main.js
-```
-
-### Linking the Package
-
-Link the package globally on your system to run it from anywhere using `npx`. Navigate to the project directory and run:
+To make your local endpoints publicly available, you will need to use `ngrok`. You can learn more about ngrok [here](https://ngrok.com/) but for the most part, it will be enought to use
 
 ```bash
-npm link
+ngrok http PORT
 ```
+
+to create a public endpoint for your service at `localhost:PORT`.
+
+### Creating and connecting a Twilio phone number
+
+For this project, you will need to create a phone number on Twilio, here's a rundown of the necessary steps:
+
+1. Sign up for a Twilio account at twilio.com
+2. Buy a phone number: Twilio usually charges around $1/mo for a phone number + usage cost which is a couple cents in most cases. We will be able to reimburse you for any charges up to $50 on Twilio after the take-home project.
+<img width="1512" alt="image" src="https://github.com/user-attachments/assets/3c353caa-0858-4549-b7bf-23075b674e9e">
+3. Point the phone number to the public endpoint for the server
+<img width="1512" alt="image" src="https://github.com/user-attachments/assets/22d6f988-5d21-4781-bb6f-dade89c28699">
 
 ### Usage
 
@@ -74,7 +78,7 @@ The assignment has the following components:
 For Milestone 1, you need to implement a service that will repeat the caller's speech back to them, by setting up the Websocket server and the server which will route the Twilio call here.
 
 #### Criteria
-- [ ] `server.js/server.py` is successfully set up to receive call from Twilio and reroute to websocket server.
+- [X] [THIS HAS BEEN PROVIDED FOR YOU] `server.js/server.py` is successfully set up to receive call from Twilio and reroute to websocket server.
 - [ ] `sockets.js/sockets.py` successfully receives audio from the Twilio connection and can repeat the speech back to the caller.
 - [ ] Every Twilio number has its own unique identifier which gets passed into the websocket endpoint (the websocket should know which `call_id` each call is when processing).
 
@@ -91,53 +95,13 @@ For Milestone 2, you need to modify your sockets.js service to be able to have a
 - [ ] User can have a call with the AI on the Twilio number 
 - [ ] The system can run an unlimited number of these turns
 
-### Milestone 3: Interruptions
-For Milestone 3, you need to add the ability to be interrupted to the AI voice service so that when the caller starts talking in the middle of the AI's speech, the AI is able to stop and listent to the caller.
-
-#### Criteria
-- [ ] Interruptability threshold is adjustable
-- [ ] <1 second latency from end of caller speech to start of AI speech
-
-### Milestone 4: Scale up
-For Milestone 4, you need to scale up this voice service to be able to take over 100 concurrent calls, by Dockerizing the service and deploying on Kubernetes.
+### Milestone 3: Scale up
+For Milestone 3, you need to scale this voice service up to be able to take over 100 concurrent calls, by Dockerizing the service and deploying on Kubernetes.
 
 #### Criteria
 - [ ] Service Dockerized
 - [ ] Running on Kubernetes locally with correct ports and permissions
 - [ ] >100 concurrency
 
-      
-```bash
-1. const { action_1 } = require('/actions/action_1.js');
-2. 
-3. export const app = {
-4.     name: '<app_name>', // e.g. 'google-calendar'
-5.     displayName: '<APP_NAME>', // e.g. 'Google Calendar'
-6.     authors: ['Kafka'],
-7. ...
-```
-**This is very important for the next milestone.**
-- [ ] The necessary functions are created as [tools](https://platform.openai.com/docs/guides/function-calling)  
-- [ ] The file structure:
-```bash
-apps/
-└── <app_name>/
-    ├── index.js
-    └── actions/
-        └── <action_name>.js
-```
-is created. `index.js` should have the **exact** content of of `/boilerplate/index.js` and `actions/<action_name>.js` should have the **exact** content of `/boilerplate/actions/<action_name>.js`.
-
-### Milestone 3: URL parsing and file modification
-For the last milestone, you need to allow Kafka to **modify** the created files.
-
-#### Criteria
-- [ ] Function `modify_file` is created. This function replaces a certain line range in a file with the provided code segment.
-- [ ] Function `read_web_page` is created. This is used to allow reading the text content from a provided url for the documentation.
-- [ ] Kafka can use these functions to implement the `run` method of the created action in the file according to documentation.
-
 ## Final run
-Once all three milestones are succesfully completed, you should now have an AI worker that you can have a conversation with and have it create integrations in the boilerplate format!
-
-## Notes
-The important thing here isn't that Kafka is able to perfectly create every integration without any manual intevention, it is that creating integrations with Kafka is faster and overall a better experience than us creating them from scratch. This symbiosis is what we strive to provide our customers with Brainbase as well.
+Once all three milestones are succesfully completed, you should now have an AI worker that you can have a conversation with by calling the provided number!
