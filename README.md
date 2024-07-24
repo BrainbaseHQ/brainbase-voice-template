@@ -43,32 +43,12 @@ For this project, you will need to create a phone number on Twilio, here's a run
 3. Point the phone number to the public endpoint for the server
 <img width="1512" alt="image" src="https://github.com/user-attachments/assets/22d6f988-5d21-4781-bb6f-dade89c28699">
 
-### Usage
-
-To start the chat application, you can use the following command from anywhere in your terminal:
-
-```bash
-npx brainbase-kafka-template
-```
-
-Alternatively, you can also run the script directly using Node.js if you are in the project directory:
-
-```bash
-node main.js
-```
-
-### Exiting the Chat
-
-To exit the chat, simply type `exit` and hit enter. The application will close.
-
 ## Components
 
 The assignment has the following components:
 
-- `main.js`: Primary part where the terminal chat application runs
-- `functions.js`: Some utility functions that need to be implemented for Kafka to be able to interact with the file system (feel free to add more functions as you need)
-- `log_utils.js`: Some utility functions for logs (no need to touch)
-- `/boilerplate`: This is what an application code should look like
+- `server.js`: Primary server that will receive the call details from Twilio
+- `sockets.js/sockets.py`: The websocket server to send and receive voice stream
 
 ## Milestones
 
